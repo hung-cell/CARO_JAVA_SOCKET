@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Main;
+package ClientCaro;
 
 import Frame.DangKyFrame;
 import Frame.DangNhapFrame;
@@ -15,7 +15,7 @@ import java.net.Socket;
  *
  * @author HP
  */
-public class Main {
+public class ClientCaro {
     public static void main(String[] args) throws IOException {
         Socket socket = new Socket("localhost", 1234);
         ClientProcess clientProcess = new ClientProcess(socket);

@@ -5,6 +5,8 @@
  */
 package Service;
 
+import Frame.GDDanhCo;
+import LogicGame.Point;
 import Model.NguoiChoi;
 import Model.TranDau;
 import java.io.DataInputStream;
@@ -25,7 +27,24 @@ public class ClientProcess {
     private DataInputStream dis;
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
-    
+    private NguoiChoi nguoiChoiDaDangNhap;
+    private GDDanhCo gdDanhCo;
+
+    public NguoiChoi getNguoiChoiDaDangNhap() {
+        return nguoiChoiDaDangNhap;
+    }
+
+    public void setNguoiChoiDaDangNhap(NguoiChoi nguoiChoiDaDangNhap) {
+        this.nguoiChoiDaDangNhap = nguoiChoiDaDangNhap;
+    }
+
+    public GDDanhCo getGdDanhCo() {
+        return gdDanhCo;
+    }
+
+    public void setGdDanhCo(GDDanhCo gdDanhCo) {
+        this.gdDanhCo = gdDanhCo;
+    }
     public ClientProcess(Socket socket) {
           try {
             this.socket = socket;
@@ -67,7 +86,9 @@ public class ClientProcess {
         if(responseFromServer.equals("thanh cong")){
             NguoiChoi nguoiChoiFromServer = (NguoiChoi) ois.readObject();
             result = nguoiChoiFromServer;
+            nguoiChoiDaDangNhap = nguoiChoiFromServer;
         }
+        
         return result;
             
     }
@@ -108,5 +129,39 @@ public class ClientProcess {
             
         }
         return result;
+    }
+    
+    public boolean danhCo(Point point){
+        try{
+            dos.writeUTF("danh co");
+            dos.flush();
+            oos.writeObject(point);
+            oos.flush();
+            String responseFromServer = dis.readUTF();
+             if(responseFromServer.equals("thanh cong")){
+                return true;
+            }else{
+                 return false;
+             }
+        }catch(Exception ex){
+            return false;
+        }
+    }
+    
+    public void listenToDoiThu() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        Point p = (Point) ois.readObject();
+                        System.out.println("Chay xong deo loi ");
+                        
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        }).start();
     }
 }

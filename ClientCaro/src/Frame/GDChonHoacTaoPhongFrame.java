@@ -8,6 +8,9 @@ package Frame;
 import Model.NguoiChoi;
 import Model.TranDau;
 import Service.ClientProcess;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -31,7 +34,12 @@ public class GDChonHoacTaoPhongFrame extends javax.swing.JFrame {
             tranDau.setCode(code);
             TranDau tranDauFromServer = this.clientProcess.taoTranDau(tranDau,nguoiChoi.getId());
             if(tranDauFromServer != null){
-                GDDanhCo gdDanhCo = new GDDanhCo(nguoiChoi,clientProcess);
+                try {
+                    GDDanhCo gdDanhCo = new GDDanhCo(nguoiChoi,clientProcess);
+                    this.clientProcess.setGdDanhCo(gdDanhCo);
+                } catch (IOException ex) {
+                    Logger.getLogger(GDChonHoacTaoPhongFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 this.dispose();
             }
         });
@@ -42,7 +50,11 @@ public class GDChonHoacTaoPhongFrame extends javax.swing.JFrame {
             tranDau.setCode(code);
             TranDau tranDauFromServer = this.clientProcess.vaoTranDau(tranDau, nguoiChoi.getId());
             if(tranDauFromServer != null){
-                GDDanhCo gdDanhCo = new GDDanhCo(nguoiChoi,clientProcess);
+                try {
+                    GDDanhCo gdDanhCo = new GDDanhCo(nguoiChoi,clientProcess);
+                } catch (IOException ex) {
+                    Logger.getLogger(GDChonHoacTaoPhongFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 this.dispose();
             }
         });

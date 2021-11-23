@@ -26,12 +26,8 @@ public class TranDauDAO extends DAO{
               if(generatedKey.next()){
                 tranDau.setId(generatedKey.getInt(1));
             }
-              result = tranDau;
-              ps = con.prepareStatement("INSERT INTO nguoichoitrongtrandau(NguoiChoiid,TranDauid) VALUES(?,?)",Statement.RETURN_GENERATED_KEYS);
-              ps.setInt(1,idNguoiChoi);
-              ps.setInt(2,tranDau.getId());
-              ps.executeUpdate();
-              System.out.println("excute được update nguoichoitrongtrandau");
+            result = tranDau;
+
         } catch(Exception ex){
             
         }
@@ -49,15 +45,7 @@ public class TranDauDAO extends DAO{
                 tranDau.setId(rs.getInt("id"));
                 System.out.println("");
             }
-            System.out.println(tranDau.getId());
-            ps = con.prepareStatement("INSERT INTO nguoichoitrongtrandau(NguoiChoiid,TranDauid) VALUES(?,?)",Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1,idNguoiChoi);
-            ps.setInt(2,tranDau.getId());
-            ps.executeUpdate();
-            ResultSet generatedKey = ps.getGeneratedKeys();
-              if(generatedKey.next()){
-                tranDau.setId(generatedKey.getInt(1));
-            }
+           
               result = tranDau;
              
         } catch(Exception ex){

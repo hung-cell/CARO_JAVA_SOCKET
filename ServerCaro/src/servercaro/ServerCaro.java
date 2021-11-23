@@ -8,6 +8,7 @@ package servercaro;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import service.ClientHandler;
 
 /**
@@ -19,6 +20,9 @@ public class ServerCaro {
     /**
      * @param args the command line arguments
      */
+    // danh sách các client đã đăng nhập thành công vào hệ thống
+    public static ArrayList<ClientHandler> listClientHandler = new ArrayList<>(); 
+    
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = new ServerSocket(1234);
         while(true){
